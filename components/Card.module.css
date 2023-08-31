@@ -1,0 +1,11 @@
+.container {
+  padding: 25px;
+  border-radius: 12px;
+  margin: auto;
+  width: fit-content;
+  max-width: 450px;
+  font-family: sans-serif;
+}
+.container > h3 {
+  margin-top: 0px;
+}

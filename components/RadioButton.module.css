@@ -1,0 +1,9 @@
+.option {
+  padding: 8px;
+  border: 1px solid gray;
+  border-radius: 12px;
+  margin-bottom: 10px;
+}
+.option > input {
+  cursor: pointer;
+}
