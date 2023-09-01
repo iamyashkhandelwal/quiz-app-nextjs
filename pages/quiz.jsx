@@ -83,7 +83,6 @@ const Quiz = ({ quizData, authentication, name }) => {
             {currQuestion !== 1 && <button onClick={() => handleOnPrevious(currQuestion)}><i className="fa-solid fa-arrow-left"></i>{" "}Previous</button>}
             {currQuestion !== 15 && <button onClick={() => handleOnNext(currQuestion)}>Next{"  "}<i className="fa-solid fa-arrow-right"></i></button>}
           </div>
-
         </div>
 
         <QuestionPanel
