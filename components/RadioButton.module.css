@@ -3,7 +3,8 @@
   border: 1px solid gray;
   border-radius: 12px;
   margin-bottom: 10px;
+  cursor: pointer;
 }
-.option > input {
+.option > input, .option > label {
   cursor: pointer;
 }

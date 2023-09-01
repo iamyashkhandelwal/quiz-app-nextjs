@@ -2,13 +2,15 @@ import React from 'react'
 import styles from './RadioButton.module.css'
 
 const RadioButton = ({ value, onClick, isSelected }) => {
-  const handleOnClick = ({ target: {value} }) => {
-    onClick?.(value);
+  const handleOnClick = (e) => {
+    e.stopPropagation();
+    const inputElement = e.currentTarget.querySelector('input');
+    onClick?.(inputElement.value);
   }
   return (
     <>
-    <div className={styles.option}>
-      <input readOnly type={'radio'} name={value} value={value} checked={isSelected} onClick={handleOnClick} />
+    <div className={styles.option} onClick={handleOnClick}>
+      <input readOnly type={'radio'} name={value} value={value} checked={isSelected} />
       <label htmlFor={value} dangerouslySetInnerHTML={{ __html: value }}></label>
     </div>
     </>
