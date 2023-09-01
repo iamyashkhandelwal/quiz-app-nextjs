@@ -1,6 +1,6 @@
 import { setCookie } from '@/lib/session';
 import { useRouter } from 'next/router';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './index.module.css';
 import Head from 'next/head';
 
@@ -9,6 +9,16 @@ const Index = () => {
   const [ name, setName ] = useState('');
   const [ email, setEmail ] = useState('');
   const [ error, setError ] = useState({ name: false, email: false });
+
+  useEffect(() => {
+    removeCookies();  // remove already existing auth cookie
+  }, [])
+
+  const removeCookies = async () => {
+    const { deleteCookie } = await import('../lib/session');
+    deleteCookie('isAuth');
+  }
+
   const handleOnClick = () => {
     if(!name || !email) {
       setError({ ...error, ...!name ? { name: true } : { name: false }, ...!email ? { email: true } : { email: false } });
