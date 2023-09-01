@@ -1,11 +1,21 @@
+.container {
+  padding: 30px 18px;
+  background-image: linear-gradient(to top, #cfd9df 0%, #e2ebf0 100%);
+}
 .table {
-  margin: 30px auto;
-  /* font-family: 'Courier New', Courier, monospace;
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; */
+  margin: auto;
   font-family: Arial, Helvetica, sans-serif;
+  border: 1px solid;
+  border-collapse: collapse;
+}
+.table th, .table td {
+  border: 1px solid #d3d7e9;
+}
+.table caption {
+  font-size: 22px;
+  font-weight: 700;
+  font-family: cursive;
+  margin-bottom: 12px;
 }
 .table th, .table td {
   padding: 8px;
@@ -13,12 +23,28 @@
 .table thead {
   background-color: darkgray;
 }
-.green {
-  background-color: #AFE1AF;
+.table tfoot th {
+  text-align: right;
 }
-.red {
-  background-color: #F67280;
-  background-color: #E55451;
-  background-color: #F75D59;
-  /* color: white; */
+.table tfoot td {
+  text-align: center;
+}
+.table tbody .score {
+  text-align: center;
+}
+.table tbody tr:nth-child(even) {
+  background-color: #D6EEEE;
+}
+.table tbody tr:nth-child(odd) {
+  background-color: white;
+}
+.table tfoot {
+  background-color: darkgray;
+}
+.container a {
+  margin: auto;
+  width: fit-content;
+  display: block;
+  padding: 18px;
+  text-decoration: underline;
 }
