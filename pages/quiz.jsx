@@ -67,7 +67,7 @@ const Quiz = ({ quizData, authentication, name }) => {
         </div>
         <div className={styles.userInfo}>
           <span>Hi {name}!</span>
-          <button className={styles.submitBtn} onClick={() => setSubmitted(true)}>End Test</button>
+          <button className={styles.submitBtn} onClick={() => setSubmitted(true)}>Submit quiz</button>
         </div>
       </header>
       <div className={styles.container}>
