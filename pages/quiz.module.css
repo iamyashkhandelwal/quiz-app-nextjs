@@ -9,6 +9,15 @@
 .header > h2 {
   margin: 0px;
 }
+.header span {
+  font-size: 16px;
+  text-transform: capitalize;
+}
+.header .userInfo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
 .cardContainer {
   margin: auto;
   width: fit-content;

@@ -7,7 +7,7 @@ import React, { useState } from 'react';
 import styles from './quiz.module.css';
 import QuestionPanel from '@/components/QuestionPanel';
 
-const Quiz = ({ quizData, authentication }) => {
+const Quiz = ({ quizData, authentication, name }) => {
   const [timeup, setTimeup] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [selectedAnswers, setSelectedAnswers] = useState(Array.from({ length: 15 }).fill(''));
@@ -57,14 +57,18 @@ const Quiz = ({ quizData, authentication }) => {
     <>
       <Head>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+        <title>MindMingle - A Quiz App</title>
       </Head>
       <header className={styles.header}>
-        <h2>Quiz</h2>
+        <h2>MindMingle</h2>
         <div className={styles.timer}>
           <i className="fa fa-stopwatch"></i>
           <CountdownTimer time={30*60} onTimeout={handleTimeout} />
         </div>
-        <button className={styles.submitBtn} onClick={() => setSubmitted(true)}>Submit</button>
+        <div className={styles.userInfo}>
+          <span>Hi {name}!</span>
+          <button className={styles.submitBtn} onClick={() => setSubmitted(true)}>End Test</button>
+        </div>
       </header>
       <div className={styles.container}>
         <div className={styles.cardContainer}>
@@ -94,10 +98,12 @@ const Quiz = ({ quizData, authentication }) => {
 
 export default Quiz;
 
-export const getServerSideProps = async ({ req }) => {
+export const getServerSideProps = async ({ req, query }) => {
   try {
     const isAuth = getCookie('isAuth', req);
-    if(!isAuth) {
+
+    // if the user is not authenticated or their name is missing from the query string then do not proceed further 
+    if(!isAuth || !query?.name) {
       return {
         props: {
           authentication: false
@@ -114,7 +120,7 @@ export const getServerSideProps = async ({ req }) => {
       correctAns: item.correct_answer
     }))
     return {
-      props: { quizData, authentication: true }
+      props: { quizData, authentication: true, name: query?.name }
     }
   } catch(err) {
     console.log('Error wile fetching data -- ', err);
