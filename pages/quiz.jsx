@@ -3,18 +3,16 @@ import CountdownTimer from '@/components/CountdownTimer';
 import Result from '@/components/Result';
 import { getCookie } from '@/lib/session';
 import Head from 'next/head';
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+import styles from './quiz.module.css';
+import QuestionPanel from '@/components/QuestionPanel';
 
 const Quiz = ({ quizData, authentication }) => {
-  // const router = useRouter();
   const [timeup, setTimeup] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [selectedAnswers, setSelectedAnswers] = useState(Array.from({ length: 15 }).fill(''));
   const [isVisited, setIsVisited] = useState(Array.from({ length: 15 }).map((_, index) => index === 0));
   const [currQuestion, setCurrQuestion] = useState(1);
-  // console.log('selectedAnswers -- ', selectedAnswers);
-  // console.log('isVisited -- ', isVisited);
-  console.log('quiz -- ', quizData);
 
   const handleTimeout = () => setTimeup(true);
 
@@ -23,7 +21,7 @@ const Quiz = ({ quizData, authentication }) => {
   }
 
   if(timeup || submitted) {
-    return(<Result selectedAnswers={selectedAnswers} />);
+    return(<Result selectedAnswers={selectedAnswers} quizData={quizData} />);
   }
 
   const handleOnSelectAnswer = (val) => {
@@ -39,22 +37,57 @@ const Quiz = ({ quizData, authentication }) => {
     setIsVisited(vis);
   }
 
+  const handleOnNext = (curr) => {
+    if(curr === 15) return;
+    setCurrQuestion(curr + 1);
+    const vis = [...isVisited];
+    vis[curr] = true;  // (curr + 1 - 1)
+    setIsVisited(vis);
+  }
+
+  const handleOnPrevious = (curr) => {
+    if(curr === 1) return;
+    setCurrQuestion(curr - 1);
+    const vis = [...isVisited];
+    vis[curr - 2] = true;  // (curr - 1 -1)
+    setIsVisited(vis);
+  }
+
   return (
     <>
-    <Head>
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
-    </Head>
-      {/* <CountdownTimer time={10} onTimeout={handleTimeout} /> */}
-      <i className="fa fa-stopwatch"></i>
-      {Array.from({length: 15}).map((_, idx) => <button style={{ background: selectedAnswers[idx] ? 'green' : isVisited[idx] ? 'orange' : 'transparent' }} key={idx} onClick={() => handleOnPanelClick(idx)}>{idx+1}</button>)}
+      <Head>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+      </Head>
+      <header className={styles.header}>
+        <h2>Quiz</h2>
+        <div className={styles.timer}>
+          <i className="fa fa-stopwatch"></i>
+          <CountdownTimer time={30*60} onTimeout={handleTimeout} />
+        </div>
+        <button className={styles.submitBtn} onClick={() => setSubmitted(true)}>Submit</button>
+      </header>
+      <div className={styles.container}>
+        <div className={styles.cardContainer}>
+          <Card 
+            question={quizData[currQuestion-1].question} 
+            options={quizData[currQuestion-1].options} 
+            selectedOption={selectedAnswers[currQuestion-1]} 
+            onSelect={handleOnSelectAnswer}
+            number={currQuestion}
+          />
+          <div className={styles.navigation}>
+            {currQuestion !== 1 && <button onClick={() => handleOnPrevious(currQuestion)}><i className="fa-solid fa-arrow-left"></i>{" "}Previous</button>}
+            {currQuestion !== 15 && <button onClick={() => handleOnNext(currQuestion)}>Next{"  "}<i className="fa-solid fa-arrow-right"></i></button>}
+          </div>
 
-      <Card 
-        question={quizData[currQuestion-1].question} 
-        options={quizData[currQuestion-1].options} 
-        selectedOption={selectedAnswers[currQuestion-1]} 
-        onSelect={handleOnSelectAnswer} 
-      />
-      <button onClick={() => setSubmitted(true)}>Submit</button>
+        </div>
+
+        <QuestionPanel
+          selectedAnswers={selectedAnswers}
+          isVisited={isVisited}
+          handleOnPanelClick={handleOnPanelClick}
+        />
+      </div>
     </>
   );
 }

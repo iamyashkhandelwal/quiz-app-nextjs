@@ -18,14 +18,11 @@ function CountdownTimer({ time, onTimeout }) {
   const remainingSeconds = seconds % 60;
 
   return (
-    <div>
-      <h2>Countdown Timer</h2>
-      <p>
-        {minutes < 10 ? '0' : ''}
-        {minutes}:{remainingSeconds < 10 ? '0' : ''}
-        {remainingSeconds}
-      </p>
-    </div>
+    <span>
+      {minutes < 10 ? '0' : ''}
+      {minutes}:{remainingSeconds < 10 ? '0' : ''}
+      {remainingSeconds}
+    </span>
   );
 }
 

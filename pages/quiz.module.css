@@ -1,0 +1,47 @@
+.header {
+  display: flex;
+  gap: 10px;
+  font-size: 20px;
+  justify-content: space-between;
+  padding: 16px 20px;
+  background-color: lightgray;
+}
+.header > h2 {
+  margin: 0px;
+}
+.cardContainer {
+  margin: auto;
+  width: fit-content;
+  max-width: 450px;
+  font-family: sans-serif;
+  flex: 0 0 75%;
+}
+.container {
+  display: flex;
+  min-height: 350px;
+  padding: 0 20px;
+}
+.timer {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.submitBtn {
+  cursor: pointer;
+}
+.navigation {
+  margin: 16px 0px;
+  display: flex;
+  justify-content: space-between;
+}
+.navigation > button {
+  cursor: pointer;
+}
+
+@media (max-width: 767px) {
+  .container {
+    flex-direction: column-reverse;
+    gap: 16px;
+    padding: 20px;
+  }
+}
